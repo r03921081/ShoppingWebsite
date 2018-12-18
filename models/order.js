@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var transactionSchema = new mongoose.Schema({
+var OrderSchema = new mongoose.Schema({
 	buyer: {
 		id: {
 			type.mongoose.Schema.Types.ObjectId,
@@ -15,11 +15,12 @@ var transactionSchema = new mongoose.Schema({
 		},
 		commidityName: String
 	},
-	tQuantity: String,
-	tAmount: String,
-	payment: String
+	Quantity: String,
+	Amount: String,
+	payment: String, /* Cash with Order(CWO), Letter of Credit(LC) */
+	deliveryDate: Date
 }, {
 		timestamps: true
 });
 
-module.exports = mongoose.model("Transaction", transactionSchema)
+module.exports = mongoose.model("Order", OrderSchema);
