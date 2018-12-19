@@ -43,6 +43,6 @@ app.get("/", function(req, res){
 	res.render("landing");
 });
 
-app.listen(3030, "localhost", function(){
+app.listen(3000, function(){
 	console.log("Server is running.");
 });

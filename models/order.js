@@ -3,11 +3,11 @@ var mongoose = require("mongoose");
 var OrderSchema = new mongoose.Schema({
 	buyer: {
 		id: {
-			type.mongoose.Schema.Types.ObjectId,
+			type: mongoose.Schema.Types.ObjectId,
 			ref: "User"
 		},
 		buyerName: String
-	}
+	},
 	commodity: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -15,10 +15,13 @@ var OrderSchema = new mongoose.Schema({
 		},
 		commidityName: String
 	},
-	Quantity: String,
-	Amount: String,
+	quantity: String,
+	amount: String,
 	payment: String, /* Cash with Order(CWO), Letter of Credit(LC) */
-	deliveryDate: Date
+	deliveryDate: {
+		type: Date,
+		default: Date.now
+	}
 }, {
 		timestamps: true
 });
