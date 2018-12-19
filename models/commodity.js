@@ -7,13 +7,13 @@ var commoditySchema = new mongoose.Schema({
 	specification: String,
 	description: String,
 	descriptionDetailed: String,
-	quantity: String,
+	quantity: Number,
 	price: String,
 	discount: String,
 	discountDealine: String,
 	createDate: {
 		type: Date,
-		default: Date.now,
+		default: Date.now
 	},
 	seller: {
 		id: {
@@ -23,7 +23,7 @@ var commoditySchema = new mongoose.Schema({
 		sellerName: String
 	},
 	comments: [
-		id: {
+		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Comment"
 		}

@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+
+<div class="jumbotron">
+	<h1 class="display-4">The hottest commodity</h1>
+	<img src="https://images.mentalfloss.com/sites/default/files/styles/mf_image_16x9/public/549058-istock-471884456.jpg?itok=rHVXk8Rq">
+	<a class="btn btn-lg btn-primary" href="/commodity/<%= commodity._id %>" role="button">Readmore</a>
+</div>
+
+<% Commidity.forEach(function(commidity){ %>
+<div class="col-md-3">
+	
+</div>
+<% }); %>
+
+<% include ../partials/footer %>
