@@ -8,7 +8,7 @@ var userSchema = new mongoose.Schema({
 	isblocked: String,
 	isDeleted: String
 }, {
-		timestamps: true
+	timestamps: true
 });
 
 userSchema.plugin(passportLocalMongoose);

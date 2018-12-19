@@ -29,7 +29,7 @@ var commoditySchema = new mongoose.Schema({
 		}
 	]
 }, {
-		timestamps: true
+	timestamps: true
 });
 
 module.exports = mongoose.model("Commodity", commoditySchema);

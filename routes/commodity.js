@@ -34,7 +34,7 @@ router.post("/", function(req, res){
 			id: req.user._id,
 			username: req.user.username
 		}
-	}
+	};
 	Commodity.create(newCommodity, function(err, newCreated){
 		if(err){
 			console.log(err);
@@ -42,7 +42,7 @@ router.post("/", function(req, res){
 		else{
 			req.redirect("/commodity");
 		}
-	})
+	});
 });
 
 // New - Create page
@@ -66,7 +66,7 @@ router.get("/:id", function(req, res){
 router.get("/:id/edit", function(req, res){
 	Commodity.findById(req.params.id, function(err, foundCommodity){
 		res.render("commodity/edit", {commodity: foundCommodity});
-	})
+	});
 });
 
 // Update specific commodity

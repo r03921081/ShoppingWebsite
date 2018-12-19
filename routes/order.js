@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Order = require("../models/order");
+var Commodity = require("../models/commodity");
 
 // Show index
 router.get("/", function(req, res){
@@ -62,7 +63,7 @@ router.get("/:id", function(req, res){
 router.get("/:id/edit", function(req, res){
 	Order.findById(req.params.id, function(err, foundOrder){
 		res.render("order/edit", {order: foundOrder});
-	})
+	});
 });
 
 // Update specific order

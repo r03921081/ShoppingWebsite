@@ -24,7 +24,7 @@ var reviewSchema = new mongoose.Schema({
 		ref: "Commodity"
 	}
 }, {
-		timestamps: true
+	timestamps: true
 });
 
 module.exports = mongoose.model("Review", reviewSchema);
