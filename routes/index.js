@@ -3,11 +3,12 @@ const router = express.Router();
 const passport = require("passport");
 
 const indexController = require("../controllers/index");
+const middleware = require("../util/middleware");
 
 router.get("/", indexController.getLandingPage);
 
 router.get("/signup", indexController.getSignup);
-router.get("/userinfo", isLoggedIn, indexController.getUserinfo);
+router.get("/userinfo", middleware.isLoggedIn, indexController.getUserinfo);
 router.post("/signup", passport.authenticate("local-signup", {
     successRedirect: "/userinfo",
     failureRedirect: "/signup"
@@ -19,11 +20,12 @@ router.post("/login", passport.authenticate("local-signin", {
 }));
 router.get("/logout", indexController.getSignout);
 
-function isLoggedIn(req, res, next){ 
-    if (req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
+// function isLoggedIn(req, res, next){ 
+//     if (req.isAuthenticated()){
+//         return next();
+//     }
+//     console.log("You have to login.");
+//     res.redirect("/login");
+// }
 
 exports.routes = router;

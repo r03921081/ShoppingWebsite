@@ -1,0 +1,52 @@
+const Product = require("../models/product");
+const Comment = require("../models/comment");
+
+let middleware = {};
+
+middleware.checkProductOwnership = (req, res, next) => {
+    if(req.isAuthenticated()){
+        Product.findByPk(req.params.pid)
+            .then(prod => {
+                if(prod.dataValues.fk_userid === req.user.id){
+                    next();
+                }
+                else{
+                    console.log("You do not have permission.");
+                }
+            })
+            .catch(err => console.log(err));
+    }
+    else{
+        console.log("You need to login to do that.");
+        res.redirect("/login");
+    }
+};
+
+middleware.checkCommentOwnership = (req, res, next) => {
+    if(req.isAuthenticated()){
+        Comment.findByPk(req.params.cid)
+            .then(comment => {
+                if(comment.dataValues.fk_userid === req.user.id){
+                    next();
+                }
+                else{
+                    console.log("You do not have permission.");
+                }
+            })
+            .catch(err => console.log(err));
+    }
+    else{
+        console.log("You have to login to do that.");
+        res.redirect("/login");
+    }
+};
+
+middleware.isLoggedIn = (req, res, next) => {
+    if(req.isAuthenticated()){
+		return next();
+	}
+	console.log("You have to login.");
+	res.redirect("/login");
+};
+
+module.exports = middleware;

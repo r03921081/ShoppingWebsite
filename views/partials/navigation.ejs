@@ -33,20 +33,36 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 
-    <ul class="navbar-nav mr-right">
-        <li class="nav-item">
-            <a class="nav-link" href="/userinfo">User info</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/signup">Sign up</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/logout">Log out</a>
-        </li>
+    <ul class="navbar-nav mr-right">        
+        <% if(!currentUser){ %>        
+            <li class="nav-item">
+                <a class="nav-link" href="/signup">Sign up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+        <% } else { %>
+            <li class="nav-item">
+                <a class="nav-link" href="/userinfo">Signed In As <%= currentUser.username %></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Log out</a>
+            </li>
+        <% } %>
     </ul>
         
     </div>
 </nav>
+
+<div class="container">
+    <% if(success && success.length>0){ %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+    <% } %>
+    <% if(error && error.length>0){ %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+</div>

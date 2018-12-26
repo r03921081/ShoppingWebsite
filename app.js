@@ -5,6 +5,7 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const session = require("express-session");
+const flash = require("connect-flash");
 
 const indexRoutes = require("./routes/index");
 const productsRoutes = require("./routes/products");
@@ -22,7 +23,21 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
+app.use(session({ 
+	secret: "MySecretKey",
+	resave: true,
+	saveUninitialized:true
+})); 
+app.use(passport.initialize()); 
+app.use(passport.session());
+myPassport(passport, User);
+app.use(flash());
+
 app.use((req, res, next) => {
+	res.locals.currentUser = req.user;
+	res.locals.success = req.flash("success");
+	res.locals.error = req.flash("error");
+
 	if(req.user !== undefined){
 		console.log(req.user);
 		User.findByPk(req.user.id)
@@ -38,23 +53,14 @@ app.use((req, res, next) => {
 	}
 });
 
-app.use(session({ 
-	secret: "MySecretKey",
-	resave: true,
-	saveUninitialized:true
-})); 
-app.use(passport.initialize()); 
-app.use(passport.session());
-myPassport(passport, User);
-
 app.use(indexRoutes.routes);
 app.use("/products", productsRoutes.routes);
 app.use("/products", commentsRoutes.routes);
 app.use(errorController.get404);
 
 sequelize
-	.sync({force: true})
-	// .sync()
+	// .sync({force: true})
+	.sync()
 	.then(() => {
 		app.listen(3000, () => {
 			console.log("Server is running.");

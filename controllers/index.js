@@ -2,6 +2,7 @@ const User = require("../models/user");
 
 exports.getLandingPage = (req, res) => {
     console.log("LandingPage");
+    req.flash("success", "Welcome to the MyShop.");
     res.render("landing");
 };
 
@@ -28,6 +29,7 @@ exports.getSignout = (req, res) => {
             return user.save();
         })
         .then(()=>{
+            req.flash("success", "You have successfully logged out.");
             req.session.destroy(() => res.redirect("/"));
         })
         .catch(err => console.log(err));    

@@ -2,7 +2,7 @@ const Product = require("../models/product");
 const User = require("../models/user");
 const Comment = require("../models/comment");
 
-const association = {};
+let association = {};
 association.UserHasManyProduct = User.hasMany(Product, {foreignKey: "fk_userid", sourceKey: "id"});
 association.ProductBelongsToUser = Product.belongsTo(User, {foreignKey: "fk_userid", targetKey: "id"});
 
