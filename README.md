@@ -1,6 +1,7 @@
 # shopProject
-
-myShopProject  
+##	Framework  
+*	Frontend: Bootstrap 4, javascript, html, css  
+*	Backend:  Express 4, Nodejs, MySQL  
 
 ## 20181216 v.1
 ### Simple functions:  
