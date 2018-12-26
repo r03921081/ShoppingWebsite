@@ -1,48 +1,65 @@
-var express 		= require("express");
-var app 			= express();
-var mongoose 		= require("mongoose"),
-	passport 		= require("passport"),
-	localStrategy 	= require("passport-local"),
-	methodOverride 	= require("method-override"),
-	bodyParser 		=  require("body-parser");
+const express = require("express");
+const app = express();
+const sequelize = require("./util/database");
+const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const session = require("express-session");
+
+const indexRoutes = require("./routes/index");
+const productsRoutes = require("./routes/products");
+const commentsRoutes = require("./routes/comments");
+const errorController = require("./controllers/error");
+
+const myPassport = require("./util/passport");
+const User = require("./models/user");
 
 app.locals.moment = require("moment");
 
-var User 			= require("./models/user"),
-	Commodity 		= require("./models/commodity"),
-	Comment 		= require("./models/comment"),
-	Transaction 	= require("./models/order"),
-	Review 			= require("./models/review");
-
-mongoose.connect("mongodb://localhost:27017/shop", {useNewUrlParser: true});
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
-app.use(require("express-session")({
+app.use((req, res, next) => {
+	if(req.user !== undefined){
+		console.log(req.user);
+		User.findByPk(req.user.id)
+		.then(u => {
+			req.user = u;
+			next();
+		})
+		.catch(err => console.log(err));
+	}
+	else{
+		console.log("Guest");
+		next();
+	}
+});
+
+app.use(session({ 
 	secret: "MySecretKey",
-	resave: false,
-	saveUninitialized: false
-}));
-
-app.use(passport.initialize());
+	resave: true,
+	saveUninitialized:true
+})); 
+app.use(passport.initialize()); 
 app.use(passport.session());
+myPassport(passport, User);
 
-passport.use(new localStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.use(indexRoutes.routes);
+app.use("/products", productsRoutes.routes);
+app.use("/products", commentsRoutes.routes);
+app.use(errorController.get404);
 
-app.use(function(req, res, next){
-	res.locals.currentUser = req.user;
-	next();
-});
-
-app.get("/", function(req, res){
-	res.render("landing");
-});
-
-app.listen(3000, function(){
-	console.log("Server is running.");
-});
+sequelize
+	.sync({force: true})
+	// .sync()
+	.then(() => {
+		app.listen(3000, () => {
+			console.log("Server is running.");
+		});
+	})
+	.catch(err => {
+		console.log(err);
+	});

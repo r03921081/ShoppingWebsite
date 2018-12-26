@@ -1,29 +1,45 @@
-var mongoose = require("mongoose");
+const Sequelize = require("sequelize");
+const sequelize = require("../util/database");
 
-var OrderSchema = new mongoose.Schema({
+const User = require("../models/user");
+const Product = require("./product");
+
+const Order = sequelize.define("order", {
+	id: {
+		type: Sequelize.UUID,
+		defaultValue: Sequelize.DataTypes.UUIDV1,
+		primaryKey: true
+	},
 	buyer: {
-		id: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "User"
-		},
-		buyerName: String
+		type: Sequelize.INTEGER,
+		references: {
+			model: User,
+			key: "id"
+		}
 	},
-	commodity: {
-		id: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Commodity"
-		},
-		commidityName: String
+	product: {
+		type: Sequelize.INTEGER,
+		references: {
+			model: Product,
+			key: "id"
+		}
 	},
-	quantity: String,
-	amount: String,
-	payment: String, /* Cash with Order(CWO), Letter of Credit(LC) */
+	quantity: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
+	amount: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
+	payment: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
 	deliveryDate: {
-		type: Date,
-		default: Date.now
+		type: Sequelize.DATE,
+		defaultValue: Sequelize.DATE.now
 	}
-}, {
-	timestamps: true
 });
 
-module.exports = mongoose.model("Order", OrderSchema);
+module.exports = Order;

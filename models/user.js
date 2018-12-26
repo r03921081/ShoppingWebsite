@@ -1,16 +1,39 @@
-var mongoose = require("mongoose");
-var passportLocalMongoose = require("passport-local-mongoose");
+const Sequelize = require("sequelize");
+const sequelize = require("../util/database");
 
-var userSchema = new mongoose.Schema({
-	username: String,
-	password: String,
-	status: String,
-	isblocked: String,
-	isDeleted: String
-}, {
-	timestamps: true
+const User = sequelize.define("user", {
+	id: {
+		type: Sequelize.UUID,
+		defaultValue: Sequelize.DataTypes.UUIDV1,
+		primaryKey: true
+	},
+	username: {
+		type: Sequelize.STRING,
+		unique: true,
+		allowNull: false
+	},
+	email: {
+		type: Sequelize.STRING,
+		unique: true,
+		validate: {
+			isEmail: true
+		}
+	},
+	password: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	last_login: {
+		type: Sequelize.DATE,
+	},
+	status: {
+		type: Sequelize.ENUM,
+		values: ["guest", "unchecked", "active", "blocked", "deleted"],
+		defaultValue: "guest"
+	},
+	blockedExpirationDate: {
+		type: Sequelize.DATE
+	}
 });
 
-userSchema.plugin(passportLocalMongoose);
-
-module.exports = mongoose.model("User", userSchema);
+module.exports = User;

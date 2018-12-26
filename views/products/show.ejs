@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= prod.image %>">
+                <div class="caption-full">
+                    <h3><a><%= prod.name %></a></h3>
+                    <h4><a><%= prod.type %></a></h4>
+                </div>
+                <a class="btn btn-lg btn-warning" href="/products/<%= prod.pid %>/edit">Edit</a>
+                <form action="/products/<%= prod.pid %>?_method=DELETE" method="POST">
+                    <button class="btn btn-lg btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="well">
+        <div class="text-right">
+            <a class="btn btn-primary" href="/products/<%= prod.pid %>/comments/new">Add new comment</a>
+        </div>
+        <% comment.forEach(c => { %>
+            <div class="row">
+                <div class="col-md-10">
+                    <strong><h3><%= c.username %></h3></strong>
+                    <p><%= c.text %></p>                    
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-warning" href="/products/<%= prod.pid %>/comments/<%= c.cid %>/edit">Edit</a>
+                    <form action="/products/<%= prod.pid %>/comments/<%= c.cid %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <p><%= c.createdAt %></p>
+                </div>
+            </div>            
+        <% }) %>
+    </div>
+</div>
+
+<% include ../partials/footer %>

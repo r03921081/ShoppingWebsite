@@ -1,0 +1,29 @@
+<% include ../partials/header %>
+<% include ../partials/navigation %>
+
+<div class="jumbotron">
+	<h1 class="display-4">The hottest Products</h1>
+	<!-- <img src="https://images.mentalfloss.com/sites/default/files/styles/mf_image_16x9/public/549058-istock-471884456.jpg?itok=rHVXk8Rq"> -->
+	<a class="btn btn-lg btn-primary" href="#" role="button">Readmore</a>
+</div>
+
+<div class="container">
+	<div class="row">
+		<% prod.forEach( product => { %>
+			<div class="col-3">
+				<div class="thumbnail">
+					<img src= "<%= product.image %>">
+					<div class="caption">
+						<h4><%= product.name %></h4>
+						<h4><%= product.type %></h4>
+					</div>
+					<p>
+						<a href="/products/<%= product.pid %>" class="btn-lg btn-primary">More info</a>
+					</p>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+</div>
+
+<% include ../partials/footer %>
