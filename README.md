@@ -23,10 +23,10 @@
 3. Change Comments CRUD
 4. Redesign SQL association implementation (User, Product, Comment, Cart, Order)
     1. One-to-One  
-        (User, Cart)
-    2. One-to-Many 
-        (User, Product && User, Order)
+        * User, Cart
+    2. One-to-Many  
+        * User, Product && User, Order
     3. Nested Many-to-One  
-        (Comment, User, Product)
+        * Comment, User, Product
     4. Many-to-Many  
-        (Product, Cart && Product, Order)
+        * Product, Cart && Product, Order
