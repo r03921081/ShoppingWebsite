@@ -1,15 +1,39 @@
 const Product = require("../models/product");
 const User = require("../models/user");
-const Comment = require("../models/comment");
+const Cart = require("../models/cart");
+const CartItem = require("../models/cartItem");
+const Order = require("../models/order");
+const OrderItem = require("../models/orderItem");
+const UserComment = require("../models/userComment");
 
-let association = {};
-association.UserHasManyProduct = User.hasMany(Product, {foreignKey: "fk_userid", sourceKey: "id"});
-association.ProductBelongsToUser = Product.belongsTo(User, {foreignKey: "fk_userid", targetKey: "id"});
+// User     1:n     Product
+exports.UserHasManyProduct = User.hasMany(Product);
+// Product  n:1     User
+exports.ProductBelongsToUser = Product.belongsTo(User, {constraints: true, onDelete: "CASCADE"});
 
-association.UserHasManyComment = User.hasMany(Comment, {foreignKey: "fk_userid", sourceKey: "id"});
-association.CommentBelongsToUser = Comment.belongsTo(User, {foreignKey: "fk_userid", targetKey: "id"});
+// User     1:1     Cart
+exports.UserHasOneCart = User.hasOne(Cart);
+// Cart     1:1     User
+exports.CartBelongsToUser = Cart.belongsTo(User);
 
-association.ProductHasManyComment = Product.hasMany(Comment, {foreignKey: "fk_prodid", sourceKey: "pid"});
-association.CommentBelongsToProduct = Comment.belongsTo(Product, {foreignKey: "fk_prodid", targetKey: "pid"});
+// Cart     n:m     Product     {CartItem}
+exports.CartBelongsToManyProduct = Cart.belongsToMany(Product, {through: CartItem});
+// Product  n:m     Cart        {CartItem}
+exports.ProductBelongsToManyCart = Product.belongsToMany(Cart, {through: CartItem});
 
-module.exports = association;
+// User     1:n     Order
+exports.UserHasManyOrder = User.hasMany(Order);
+// Order    n:1     User
+exports.OrderBelongsToUser = Order.belongsTo(User);
+// Order    n:m     Product     {OrderItem}
+exports.OrderBelongsToManyProduct = Order.belongsToMany(Product, {through: OrderItem});
+
+// User     1:n     Comment
+exports.UserHasManyComment = User.hasMany(UserComment);
+// Comment  n:1     User
+exports.CommentBelongsToUser = UserComment.belongsTo(User);
+
+// Product  1:n     Comment     
+exports.ProductHasManyComment = Product.hasMany(UserComment);
+// Comment  n:1     Product     
+exports.CommentBelongsToProduct = UserComment.belongsTo(Product);

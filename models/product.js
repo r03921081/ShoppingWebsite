@@ -1,8 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
-const User = require("../models/user");
-
 const Product = sequelize.define("product", {
 	pid: {
 		type: Sequelize.UUID,
@@ -20,13 +18,6 @@ const Product = sequelize.define("product", {
 	image: {
 		type: Sequelize.STRING,
 		allowNull: false
-	},
-	fk_userid: {
-		type: Sequelize.UUID,
-		references: {
-			model: User,
-			key: "id"
-		}
 	}
 });
 

@@ -13,6 +13,7 @@ const commentsRoutes = require("./routes/comments");
 const errorController = require("./controllers/error");
 
 const myPassport = require("./util/passport");
+const association = require("./util/association");
 const User = require("./models/user");
 
 app.locals.moment = require("moment");
@@ -54,8 +55,8 @@ app.use((req, res, next) => {
 });
 
 app.use(indexRoutes.routes);
-app.use("/products", productsRoutes.routes);
-app.use("/products", commentsRoutes.routes);
+app.use(productsRoutes.routes);
+app.use(commentsRoutes.routes);
 app.use(errorController.get404);
 
 sequelize

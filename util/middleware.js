@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const Comment = require("../models/comment");
+const UserComment = require("../models/userComment");
 
 let middleware = {};
 
@@ -24,9 +24,9 @@ middleware.checkProductOwnership = (req, res, next) => {
 
 middleware.checkCommentOwnership = (req, res, next) => {
     if(req.isAuthenticated()){
-        Comment.findByPk(req.params.cid)
-            .then(comment => {
-                if(comment.dataValues.fk_userid === req.user.id){
+        UserComment.findByPk(req.params.cid)
+            .then(userComment => {
+                if(userComment.dataValues.fk_userid === req.user.id){
                     next();
                 }
                 else{

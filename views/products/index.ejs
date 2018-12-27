@@ -1,29 +1,38 @@
-<% include ../partials/header %>
-<% include ../partials/navigation %>
+<%- include ../includes/header %>
+<%- include ../includes/navigation %>
 
 <div class="jumbotron">
 	<h1 class="display-4">The hottest Products</h1>
 	<!-- <img src="https://images.mentalfloss.com/sites/default/files/styles/mf_image_16x9/public/549058-istock-471884456.jpg?itok=rHVXk8Rq"> -->
 	<a class="btn btn-lg btn-primary" href="#" role="button">Readmore</a>
 </div>
-
-<div class="container">
-	<div class="row">
-		<% prod.forEach( product => { %>
-			<div class="col-3">
-				<div class="thumbnail">
-					<img src= "<%= product.image %>">
-					<div class="caption">
-						<h4><%= product.name %></h4>
-						<h4><%= product.type %></h4>
+<main>
+	<div class="container"></div>
+		<% if(prod.length > 0){ %>
+			<div class="row">
+				<% prod.forEach( product => { %>
+					<div class="col">
+						<div class="card" style="width: 18rem;">
+							<img src="<%= product.image %>" class="card-img-top" alt="<%= product.name %>">
+							<div class="card-body">
+								<h5 class="card-title"><%= product.name %></h5>
+								<p><%= product.type %></p>	
+								<p><%= product.pid %></p>								
+							</div>
+							<div class="card-body">
+								<a href="/products/<%= product.pid %>" class="btn btn-primary">More info</a>
+								<%- include("../includes/addToCart.ejs", {product: product}) %>
+							</div>							
+						</div>
 					</div>
-					<p>
-						<a href="/products/<%= product.pid %>" class="btn-lg btn-primary">More info</a>
-					</p>
-				</div>
+				<% }); %>
 			</div>
-		<% }); %>
+		<% } else { %>
+			<div class="center">
+				<h1>No Products Found!</h1>
+			</div>        
+		<% } %>
 	</div>
-</div>
+</main>
 
-<% include ../partials/footer %>
+<%- include ../includes/footer %>

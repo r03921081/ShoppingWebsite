@@ -5,14 +5,14 @@ const middleware = require("../util/middleware");
 const commentsController = require("../controllers/comments");
 
 // Get "create a new comment" page.
-router.get("/:pid/comments/new", middleware.isLoggedIn, commentsController.getAddComment);
-// Create a new comment.
-router.post("/:pid/comments/", middleware.isLoggedIn, commentsController.postAddComment);
+router.get("/products/:pid/comments/new", middleware.isLoggedIn, commentsController.getAddComment);
+// Save a new comment.
+router.post("/products/:pid/comments/", middleware.isLoggedIn, commentsController.postAddComment);
 // Get "edit the specific comment" page.
-router.get("/:pid/comments/:cid/edit", middleware.checkCommentOwnership, commentsController.getEditComment);
+router.get("/products/:pid/comments/:cid/edit", commentsController.getEditComment);
 // Update "edit the specific comment".
-router.put("/:pid/comments/:cid", middleware.checkCommentOwnership, commentsController.putEditComment);
+router.put("/products/:pid/comments/:cid", commentsController.putEditComment);
 // Destroy the specific comment.
-router.delete("/:pid/comments/:cid", middleware.checkCommentOwnership, commentsController.deleteEditComment);
+router.delete("/products/:pid/comments/:cid", commentsController.deleteEditComment);
 
 exports.routes = router;

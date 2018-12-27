@@ -9,9 +9,17 @@
         <li class="nav-item">
             <a class="nav-link" href="/products/">Products</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/products/new">Add a New Product</a>
-        </li>
+        <% if(currentUser){ %>
+            <li class="nav-item">
+                <a class="nav-link" href="/products/new">Add a New Product</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cart">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/orders">Order</a>
+            </li>
+        <% } %>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Dropdown

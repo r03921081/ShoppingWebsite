@@ -58,6 +58,7 @@ const passportLocal = (passport, user) => {
                             }
                             if(newUser){
                                 console.log(newUser);
+                                newUser.createCart();
                                 return done(null, newUser);
                             }
                         })
