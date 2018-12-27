@@ -25,8 +25,10 @@
     1. One-to-One  
         * User, Cart
     2. One-to-Many  
-        * User, Product && User, Order
+        * User, Product  
+        * User, Order
     3. Nested Many-to-One  
         * Comment, User, Product
     4. Many-to-Many  
-        * Product, Cart && Product, Order
+        * Product, Cart  
+        * Product, Order
