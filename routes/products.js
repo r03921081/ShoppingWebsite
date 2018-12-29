@@ -13,11 +13,11 @@ router.get("/products/new", middleware.isLoggedIn, productsController.getAddProd
 // Get the specific product.
 router.get("/products/:pid", productsController.getUniqueProduct);
 // Get "edit the specific product" page.
-router.get("/products/:pid/edit", productsController.getEditProduct);
+router.get("/products/:pid/edit", middleware.checkProductOwnership, productsController.getEditProduct);
 // Update "edit the specific product".
-router.put("/products/:pid", productsController.putEditProduct);
+router.put("/products/:pid", middleware.checkProductOwnership, productsController.putEditProduct);
 // Destroy the specific product.
-router.delete("/products/:pid", productsController.deleteEditProduct);
+router.delete("/products/:pid", middleware.checkProductOwnership, productsController.deleteEditProduct);
 
 // Get Cart page.
 router.get("/cart", productsController.getCart);

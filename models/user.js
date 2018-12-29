@@ -31,7 +31,13 @@ const User = sequelize.define("user", {
 		values: ["guest", "unchecked", "active", "blocked", "deleted"],
 		defaultValue: "guest"
 	},
-	blockedExpirationDate: {
+	blockedExpiration: {
+		type: Sequelize.DATE
+	},
+	resetToken: {
+		type: Sequelize.STRING
+	},
+	resetTokenExpiration: {
 		type: Sequelize.DATE
 	}
 });

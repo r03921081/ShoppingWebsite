@@ -31,6 +31,7 @@
                 <div class="col-md-2">
                     <a class="btn btn-warning" href="/products/<%= prod.pid %>/comments/<%= c.cid %>/edit">Edit</a>
                     <form action="/products/<%= prod.pid %>/comments/<%= c.cid %>?_method=DELETE" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button class="btn btn-danger">Delete</button>
                     </form>
                     <p><%= c.createdAt %></p>

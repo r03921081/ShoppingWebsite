@@ -49,6 +49,7 @@
             <input type="date" class="form-control" name="product[ExpirationDate]" placeholder="Discount Expriration Date">
         </div> -->
         <div class="form-group">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn-lg btn-primary">Submit</button>
         </div>
     </form>

@@ -1,5 +1,6 @@
 const bCrypt = require("bcrypt-nodejs");
 const localStrategy = require("passport-local").Strategy;
+const mySendEmail = require("./email");
 
 const passportLocal = (passport, user) => {
     const User = user;
@@ -27,6 +28,8 @@ const passportLocal = (passport, user) => {
             passReqToCallback: true
         },
         (req, email, password, done) => {
+            // Add new input confirmedPassword here.
+            // Use bCrypt.compare to compare password and confirmedPassword.
             const generateHash = password => {
                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
             };
@@ -39,6 +42,7 @@ const passportLocal = (passport, user) => {
                 console.log(user);
                 if(user){
                     console.log("The email is already taken.");
+                    req.flash("error", "The email already exists.");
                     return done(null, false, {
                         message: "The email is already taken."
                     });
@@ -53,16 +57,22 @@ const passportLocal = (passport, user) => {
                     User.create(userData)
                         .then((newUser) => {
                             if(!newUser){
+                                req.flash("error", "Please try again");
                                 console.log("newUser null");
                                 return done(null, false);
                             }
                             if(newUser){
                                 console.log(newUser);
                                 newUser.createCart();
+                                console.log(mySendEmail.sendSignupConfirmedMail(newUser));
                                 return done(null, newUser);
                             }
                         })
-                        .catch(err => console.log(err));
+                        .catch(err => {
+                            req.flash("error", "The username already exists.");
+                            console.log(err);
+                            return done(null, false);
+                        });
                 }
             })
             .catch(err => console.log(err));
@@ -85,11 +95,13 @@ const passportLocal = (passport, user) => {
                 }
             }).then(function(user) {
                 if (!user) {
+                    req.flash("error", "Email does not exist");
                     return done(null, false, {
-                        message: "Email does not exist"
+                        message: "Email does not exist."
                     });
                 }
                 if (!isValidPassword(user.password, password)) {
+                    req.flash("error", "Incorrect password.");
                     return done(null, false, {
                         message: "Incorrect password."
                     });
@@ -98,8 +110,9 @@ const passportLocal = (passport, user) => {
                 return done(null, userinfo);
             }).catch(function(err) {
                 console.log("catch:", err);
+                req.flash("error", "Something went wrong with your Signin.");
                 return done(null, false, {
-                    message: "Something went wrong with your Signin"
+                    message: "Something went wrong with your Signin."
                 });
             });
         }

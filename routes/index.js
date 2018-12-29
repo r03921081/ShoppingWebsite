@@ -24,6 +24,15 @@ router.post("/login", passport.authenticate("local-signin", {
     failureRedirect: "/login"
 }));
 // Logout the user.
-router.get("/logout", indexController.getSignout);
+router.post("/logout", indexController.postSignout);
+
+// Get "Forget Password Request".
+router.get("/forgetPassword", indexController.getForgetPassword);
+// Send "Forget Password Request" email.
+router.post("/forgetPassword", indexController.postForgetPassword);
+// Get "Reset Password Request".
+router.get("/resetPassword/:token", indexController.getResetPassword);
+// Post "Reset Password Request".
+router.post("/resetPassword", indexController.postResetPassword);
 
 exports.routes = router;

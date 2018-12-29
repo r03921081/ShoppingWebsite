@@ -9,10 +9,10 @@ router.get("/products/:pid/comments/new", middleware.isLoggedIn, commentsControl
 // Save a new comment.
 router.post("/products/:pid/comments/", middleware.isLoggedIn, commentsController.postAddComment);
 // Get "edit the specific comment" page.
-router.get("/products/:pid/comments/:cid/edit", commentsController.getEditComment);
+router.get("/products/:pid/comments/:cid/edit", middleware.checkCommentOwnership, commentsController.getEditComment);
 // Update "edit the specific comment".
-router.put("/products/:pid/comments/:cid", commentsController.putEditComment);
+router.put("/products/:pid/comments/:cid", middleware.checkCommentOwnership, commentsController.putEditComment);
 // Destroy the specific comment.
-router.delete("/products/:pid/comments/:cid", commentsController.deleteEditComment);
+router.delete("/products/:pid/comments/:cid", middleware.checkCommentOwnership, commentsController.deleteEditComment);
 
 exports.routes = router;

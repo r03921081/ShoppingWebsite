@@ -13,6 +13,7 @@
                         <button class="btn btn-warning" type="submit">Decrease 1</button>
                     </form>
                     <form action="/cartDelete" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <input type="hidden" value="<%= p.pid %>" name="productId">
                         <button class="btn btn-danger" type="submit">Cancel</button>
                     </form>
@@ -21,6 +22,7 @@
             </div>
         <% });%>
         <form action="/orders" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn btn-primary" type="submit">Order Now</button>
         </form>
     <% }else{ %>

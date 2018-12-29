@@ -54,7 +54,10 @@
                 <a class="nav-link" href="/userinfo">Signed In As <%= currentUser.username %></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout">Log out</a>
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="nav-link" type="submit">Log out</button>
+                </form>
             </li>
         <% } %>
     </ul>

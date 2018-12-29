@@ -7,7 +7,7 @@ middleware.checkProductOwnership = (req, res, next) => {
     if(req.isAuthenticated()){
         Product.findByPk(req.params.pid)
             .then(prod => {
-                if(prod.dataValues.fk_userid === req.user.id){
+                if(prod.userId === req.user.id){
                     next();
                 }
                 else{
@@ -26,7 +26,7 @@ middleware.checkCommentOwnership = (req, res, next) => {
     if(req.isAuthenticated()){
         UserComment.findByPk(req.params.cid)
             .then(userComment => {
-                if(userComment.dataValues.fk_userid === req.user.id){
+                if(userComment.userId === req.user.id){
                     next();
                 }
                 else{
