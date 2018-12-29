@@ -16,7 +16,7 @@
 1. Authorization (User, Product, Comment)
 2. connect-flash
 
-## 20181217
+## 20181227
 ### Main functions: 
 1. Add Cart CRUD 
 2. Add Order CRUD
