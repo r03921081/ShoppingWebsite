@@ -5,7 +5,7 @@ const bCrypt = require("bcrypt-nodejs");
 
 exports.getLandingPage = (req, res) => {
     console.log("LandingPage");
-    // req.flash("success", "Welcome to the MyShop.");
+    req.flash("success", "Welcome to the MyShop.");
     res.render("landing");
 };
 
@@ -31,9 +31,8 @@ exports.postSignout = (req, res) => {
             user.last_login = Date.now();
             return user.save();
         })
-        .then(()=>{
-            req.flash("success", "You have successfully logged out.");
-            req.session.destroy(() => {                
+        .then(()=>{            
+            req.session.destroy(() => {               
                 res.redirect("/");
             });
         })

@@ -1,12 +1,14 @@
 const Product = require("../models/product");
 const UserComment = require("../models/userComment");
+const { validationResult } = require("express-validator/check");
 
 exports.getAddComment = (req, res) => {
     const productId = req.params.pid;
     Product.findByPk(productId)
         .then(prod => {
             res.render("comments/new", {
-                prod: prod
+                prod: prod,
+                validationErrors: []
             });
         })
         .catch(err => console.log(err));
@@ -14,7 +16,17 @@ exports.getAddComment = (req, res) => {
 
 exports.postAddComment = (req, res) => {
     const productId = req.params.pid;
+    const prod = req.body.myProduct;
     const text = req.body.comment.text;
+    const validationErrors = validationResult(req);
+
+    if(!validationErrors.isEmpty()){
+        return res.status(422).render("comments/new", {
+            prod: prod,
+            validationErrors: validationErrors.array(),
+            error: validationErrors.array()[0].msg
+        });
+    }
 
     req.user.createUserComment({
             text: text
@@ -28,6 +40,7 @@ exports.postAddComment = (req, res) => {
         })
         .then(() => {
             console.log("Successfully add a new comment");
+            req.flash("success", "Successfully add a new comment");
             res.redirect("/products/" + productId);
         })
         .catch(err => console.log(err));
@@ -46,7 +59,8 @@ exports.getEditComment = (req, res) => {
         .then(product => {
             res.render("comments/edit", {
                 prod: product,
-                comment: myComment
+                comment: myComment,
+                validationErrors: []
             });
         })
         .catch(err => console.log(err));  
@@ -54,8 +68,22 @@ exports.getEditComment = (req, res) => {
 
 exports.putEditComment = (req,res) => {
     const productId = req.params.pid;
-    const updatedText = req.body.comment.text;
+    const prod = req.body.myProduct;
     const commentId = req.params.cid;
+    const updatedText = req.body.comment.text;    
+    const validationErrors = validationResult(req);
+
+    if(!validationErrors.isEmpty()){
+        return res.status(422).render("comments/edit", {
+            prod: prod,
+            comment: {
+                cid: commentId,
+                text: updatedText
+            },
+            validationErrors: validationErrors.array(),
+            error: validationErrors.array()[0].msg
+        });
+    }
 
     UserComment.findByPk(commentId)
     .then(comment => {
@@ -66,6 +94,7 @@ exports.putEditComment = (req,res) => {
     })
     .then(() => {
         console.log("Updated Comment Finish!");
+        req.flash("success", "Updated Comment Finish!");
         res.redirect("/products/" + productId);
     })
     .catch(err => console.log(err));  
@@ -80,6 +109,7 @@ exports.deleteEditComment = (req, res) => {
     })
     .then(() => {
         console.log("Delete Comment Finish!");
+        req.flash("success", "Delete Comment Finish!");
         res.redirect("/products/" + req.params.pid);
     })
     .catch(err => {

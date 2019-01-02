@@ -8,7 +8,7 @@ const UserComment = sequelize.define("userComment", {
 		primaryKey: true
 	},
 	text: {
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT,
 		allowNull: false
 	}
 });

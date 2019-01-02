@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 // const smtpTransport = require("nodemailer-smtp-transport");
 
-const myMail = "welcometomyshop2018@gmail.com";
+const myMail = "********@gmail.com";
 
 const transporter = nodemailer.createTransport({
 	service: "Gmail",
@@ -19,7 +19,7 @@ module.exports = {
 		console.log("-----");
 		const options = {
 			from: myMail,
-			to: "a98703003@gmail.com",
+			to: "******@gmail.com",
 			cc: "",
 			subject: "Please confirm your acoount.",
 			text: "Welcome to MyShop.",
@@ -41,7 +41,7 @@ module.exports = {
 		console.log("-----");
 		const options = {
 			from: myMail,
-			to: "a98703003@gmail.com",
+			to: "******@gmail.com",
 			cc: "",
 			subject: "Please reset your password.",
 			text: "Welcome to MyShop.",

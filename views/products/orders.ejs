@@ -4,17 +4,21 @@
 <div class="container">
     <% if(orders.length > 0) {%>
         <% orders.forEach(order => { %>
-                <h1><%= order.id %></h1>
-                <% order.products.forEach(product => { %>
+                <h3><a href="/orders/<%= order.id %>">Inovice</a> - <%= order.id %></h3>
+                
+                <h4></h4>
+                <% order.orderItems.forEach(item => { %>
                     <div class="row">
                         <div class="col">
-                            <h1><%= product.name %></h1>
+                            <p><%= item.productName %></p>
                         </div>
                         <div class="col">
-                            <h1><%= product.orderItem.quantity %></h1>
+                            <p><%= item.quantity %></p>
                         </div>
                     </div>
                 <% })%>
+                <h4><%= order.createdAt %></h4>
+                <hr>
         <% });%>
     <% }else{ %>
         <h1>No Products in Orders!</h1>

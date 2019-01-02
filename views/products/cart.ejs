@@ -10,6 +10,7 @@
                     <h2><%= p.cartItem.quantity %></h2>
                     <form action="/cartDelete?edit=true" method="POST">
                         <input type="hidden" value="<%= p.pid %>" name="productId">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button class="btn btn-warning" type="submit">Decrease 1</button>
                     </form>
                     <form action="/cartDelete" method="POST">

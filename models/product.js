@@ -15,6 +15,14 @@ const Product = sequelize.define("product", {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
+	price: {
+		type:Sequelize.INTEGER,
+		allowNull: false
+	},
+	description: {
+		type: Sequelize.TEXT,
+		allowNull: false
+	},
 	image: {
 		type: Sequelize.STRING,
 		allowNull: false

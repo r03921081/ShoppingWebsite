@@ -25,8 +25,10 @@ exports.ProductBelongsToManyCart = Product.belongsToMany(Cart, {through: CartIte
 exports.UserHasManyOrder = User.hasMany(Order);
 // Order    n:1     User
 exports.OrderBelongsToUser = Order.belongsTo(User);
+// Order    1:n     OrderItem
+exports.OrderHasManyOrderItem = Order.hasMany(OrderItem);
 // Order    n:m     Product     {OrderItem}
-exports.OrderBelongsToManyProduct = Order.belongsToMany(Product, {through: OrderItem});
+// exports.OrderBelongsToManyProduct = Order.belongsToMany(Product, {through: OrderItem});
 
 // User     1:n     Comment
 exports.UserHasManyComment = User.hasMany(UserComment);

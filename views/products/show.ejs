@@ -5,13 +5,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="thumbnail">
-                <img class="img-responsive" src="<%= prod.image %>">
+                <img class="img-responsive" src="/<%= prod.image %>">
                 <div class="caption-full">
                     <h3><a><%= prod.name %></a></h3>
                     <h4><a><%= prod.type %></a></h4>
                 </div>
                 <a class="btn btn-lg btn-warning" href="/products/<%= prod.pid %>/edit">Edit</a>
                 <form action="/products/<%= prod.pid %>?_method=DELETE" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button class="btn btn-lg btn-danger">Delete</button>
                 </form>
             </div>
