@@ -1,10 +1,8 @@
 const Product = require("../models/product");
-const Order = require("../models/order");
+
 const { validationResult } = require("express-validator/check");
 const fileHandler = require("../util/fileHandler");
 const PDFDocument = require("pdfkit");
-const blobStream = require("blob-stream")
-const fs = require("fs");
 
 exports.getProducts = (req, res, next) => {
     Product.findAll()

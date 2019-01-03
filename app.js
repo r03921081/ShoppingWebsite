@@ -19,7 +19,7 @@ const association = require("./util/association");
 
 const User = require("./models/user");
 
-app.locals.moment = require("moment");
+// app.locals.moment = require("moment");
 const csrfProtection = csrf();
 
 app.set("view engine", "ejs");
