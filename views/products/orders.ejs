@@ -1,7 +1,7 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container-fluid orders">
+<div class="container-fluid orders formShallow formLimited">
     <% if(orders.length > 0) {%>
     <% orders.forEach(order => { %>
     <h3><a href="/orders/<%= order.id %>">INOVICE</a> - <%= order.id %></h3>
@@ -21,7 +21,9 @@
     <hr>
     <% });%>
     <% }else{ %>
-    <h1>No Products in Orders!</h1>
+    <div class="text-center">
+        <h1>No Products in Orders!</h1>
+    </div>
     <% }%>
 </div>
 

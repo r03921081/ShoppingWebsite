@@ -1,7 +1,7 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container cartItems">
+<div class="container cartItems formShallow formLimited">
     <% if(prod.length > 0) {%>
     <% prod.forEach(p => { %>
     <div class="row">
@@ -31,7 +31,9 @@
         </form>
     </div>
     <% }else{ %>
-    <h1>No Products in Cart!</h1>
+    <div class="text-center">
+        <h1>No Products in Cart!</h1>
+    </div>
     <% }%>
 </div>
 

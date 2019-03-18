@@ -4,9 +4,27 @@ body {
 
 main {
     padding-top: 1rem;
+    padding-bottom: 1rem;
     padding-right: 5rem;
     padding-left: 5rem;
     margin: auto;
+}
+
+.btn {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.shallow {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.formShallow {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding: 1rem;
+}
+
+.formLimited {
+    min-width: 20rem;
 }
 
 .btnEdit {
@@ -41,7 +59,7 @@ main {
 
 .userinfo .row {
     display: flex;
-    margin-top: 5rem;
+    margin: 1rem;
 }
 
 .productsCard{
@@ -51,7 +69,6 @@ main {
     min-width: 20rem;
     max-height: 30rem;
     min-height: 15rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
 .productsCard .card-img-top {
@@ -71,6 +88,7 @@ main {
 }
 
 .productsInfo{
+    min-width: 50rem;
     padding: 1rem;
 }
 
@@ -85,9 +103,8 @@ main {
     padding-top: 1rem;
 }
 
-.well {
-    border: solid;
-    margin-bottom: 1rem;
+.productInfoDel {
+    box-shadow: 0 0 0;
 }
 
 .productsInfo .btnAddComment {
