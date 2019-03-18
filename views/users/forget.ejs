@@ -1,12 +1,12 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container">
-    <div class="alert alert-danger" role="alert">
+<div class="container-fluid">
+    <div class="alert alert-danger alert-fluid" role="alert">
         <h4 class="alert-heading">The email service has not been enabled.</h4>
         <p class="mb-0">You can not change your password now.</p>
     </div>
-    <form action="/forgetPassword" method="POST"> 
+    <form action="/forgetPassword" method="POST">
         <div class="form-group">
             <label for="email">Email address</label>
             <input class="form-control" type="email" name="email" id="email">
@@ -16,7 +16,7 @@
             <button class="btn-lg btn-primary">Submit</button>
         </div>
     </form>
-    
+
 </div>
 
 <% include ../includes/footer %>

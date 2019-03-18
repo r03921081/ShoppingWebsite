@@ -1,32 +1,134 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
-    padding: 0;
-    margin: 0;
     font-family: 'Open Sans', sans-serif;
 }
 
 main {
-    padding: 1rem;
+    padding-top: 1rem;
+    padding-right: 5rem;
+    padding-left: 5rem;
     margin: auto;
 }
 
-form {
-    display: inline;
+.btnEdit {
+    color: white;
 }
 
-.card {
+.btnDelete {
+    color: white;
+}
+
+.btnAddCart {
+    color: whitesmoke;
+}
+
+.btnEditDeleteGroup {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.btnEditDeleteGroup .btn {
+    min-width: 6rem;    
+    margin-bottom: 0.5rem;
+    float: right;
     margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    margin-right: 0.5rem;
 }
 
 .jumbotron img {
-    padding: 0;
-    margin: 0;
-    border: 0;
     display: flex;
     max-width: 100%;
+}
+
+.userinfo .row {
+    display: flex;
+    margin-top: 5rem;
+}
+
+.productsCard{
+    margin: auto;
+    padding: auto;
+    max-width: 20rem;
+    min-width: 20rem;
+    max-height: 30rem;
+    min-height: 15rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.productsCard .card-img-top {
+    height: 15rem;
+}
+
+.productsCard .cardBodyInfo {
+    height: 10rem;
+}
+
+.productsCard .cardBodyButton{
+    height: 5rem;
+}
+
+.productsCard .cardBodyButton .btn{
+    margin-left: 1rem;
+}
+
+.productsInfo{
+    padding: 1rem;
+}
+
+.productsInfo .productsImg{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 30rem;
+}
+
+.productsInfo .productsInfoText{
+    padding-top: 1rem;
+}
+
+.well {
+    border: solid;
+    margin-bottom: 1rem;
+}
+
+.productsInfo .btnAddComment {
+    margin-bottom: 1rem;
+}
+
+.productsInfo .productsComments {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.productsInfo .productsComments .btnEditDeleteGroup .btn {
+    width: 6rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.cartItems {
+    margin: auto;
+    padding: 1rem;
+}
+
+.cartItems .row {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
+
+.cartItems .row .btn {
+    color: white;
+    width: 8rem;
+    margin-bottom: 0.5rem;
+    float: right;
+    margin-left: auto;
+    margin-right: 0.5rem;
+}
+
+.orders {
+    margin: auto;
+    padding: 1rem;
+}
+
+.alert {
+    margin-top: 1rem;
 }

@@ -34,7 +34,7 @@ exports.postAddProduct = (req, res, next) => {
     const description = req.body.product.description;
     const validationErrors = validationResult(req);
 
-    if(!image){
+    if (!image) {
         return res.status(422).render("products/new", {
             product: {
                 name: name,
@@ -48,7 +48,7 @@ exports.postAddProduct = (req, res, next) => {
     }
     const imageURL = image.path;
 
-    if(!validationErrors.isEmpty()){
+    if (!validationErrors.isEmpty()) {
         return res.status(422).render("products/new", {
             product: {
                 name: name,
@@ -68,16 +68,16 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         description: description
     })
-    .then(prod => {
-        console.log("Create " + prod.name);
-        res.redirect("products/");
-    })
-    .catch(err => {
-        console.log(err);
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-    });
+        .then(prod => {
+            console.log("Create " + prod.name);
+            res.redirect("products/");
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.getUniqueProduct = (req, res, next) => {
@@ -97,7 +97,7 @@ exports.getUniqueProduct = (req, res, next) => {
             return comments;
         })
         .then(() => {
-            res.render("products/show",{
+            res.render("products/show", {
                 prod: myProd,
                 comment: myComment
             });
@@ -114,26 +114,26 @@ exports.getEditProduct = (req, res, next) => {
     const prodId = req.params.pid;
 
     req.user.getProducts({
-        where: { 
-            pid: prodId 
-        } 
-    })
-    .then(prods => {
-        const prod = prods[0];
-        if (!prod) {
-            return res.redirect("/");
+        where: {
+            pid: prodId
         }
-        res.render("products/edit", {
-            prod: prod,
-            validationErrors: []
-        });
     })
-    .catch(err => {
-        console.log(err);
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-    });
+        .then(prods => {
+            const prod = prods[0];
+            if (!prod) {
+                return res.redirect("/");
+            }
+            res.render("products/edit", {
+                prod: prod,
+                validationErrors: []
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.putEditProduct = (req, res, next) => {
@@ -145,7 +145,7 @@ exports.putEditProduct = (req, res, next) => {
     const updatedDescription = req.body.product.descripiton;
     const validationErrors = validationResult(req);
 
-    if(!validationErrors.isEmpty()){
+    if (!validationErrors.isEmpty()) {
         return res.status(422).render("products/edit", {
             prod: {
                 name: updatedName,
@@ -159,46 +159,46 @@ exports.putEditProduct = (req, res, next) => {
     }
 
     Product.findByPk(productId)
-    .then(prod => {
-        prod.name = updatedName;
-        prod.type = updatedType;
-        if(updatedImage){
-            fileHandler.deleteFile(prod.image);
-            prod.image = updatedImage.path;
-        }
-        prod.price = updatedPrice;
-        prod.descripiton = updatedDescription;
-        return prod.save();        
-    })
-    .then(() => {
-        console.log("Updated Product Finish!");
-        res.redirect("/products/" + productId);
-    })
-    .catch(err => {
-        console.log(err);
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-    });
+        .then(prod => {
+            prod.name = updatedName;
+            prod.type = updatedType;
+            if (updatedImage) {
+                fileHandler.deleteFile(prod.image);
+                prod.image = updatedImage.path;
+            }
+            prod.price = updatedPrice;
+            prod.descripiton = updatedDescription;
+            return prod.save();
+        })
+        .then(() => {
+            console.log("Updated Product Finish!");
+            res.redirect("/products/" + productId);
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.deleteEditProduct = (req, res, next) => {
     const productId = req.params.pid;
     Product.findByPk(productId)
-    .then(prod => {
-        fileHandler.deleteFile(prod.image);
-        return prod.destroy();
-    })
-    .then(() => {
-        console.log("Delete Product Finish!");
-        res.redirect("/products");
-    })
-    .catch(err => {
-        console.log(err);
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-    });
+        .then(prod => {
+            fileHandler.deleteFile(prod.image);
+            return prod.destroy();
+        })
+        .then(() => {
+            console.log("Delete Product Finish!");
+            res.redirect("/products");
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.getCart = (req, res, next) => {
@@ -225,7 +225,7 @@ exports.getCart = (req, res, next) => {
         });
 };
 
-exports.postAddProductIntoCart = (req,res, next) => {
+exports.postAddProductIntoCart = (req, res, next) => {
     console.log(req.body.productId);
     const prodId = req.body.productId;
     let myCart;
@@ -242,19 +242,19 @@ exports.postAddProductIntoCart = (req,res, next) => {
         })
         .then(prods => {
             let prod;
-            if(prods.length > 0){
+            if (prods.length > 0) {
                 prod = prods[0];
             }
-            if(prod){
+            if (prod) {
                 const oldQuantity = prod.cartItem.quantity;
-                newQuantity = oldQuantity+1;
+                newQuantity = oldQuantity + 1;
                 return prod;
             }
             return Product.findByPk(prodId);
         })
         .then(prod => {
             return myCart.addProduct(prod, {
-                through: {quantity: newQuantity}
+                through: { quantity: newQuantity }
             });
         })
         .then(() => {
@@ -273,57 +273,57 @@ exports.postDeleteProductFromCart = (req, res, next) => {
     const prodId = req.body.productId;
     const editMode = req.query.edit;
 
-    if(editMode){
+    if (editMode) {
         req.user.getCart()
-        .then(cart => {
-            return cart.getProducts({
-                where: {
-                    pid: prodId
+            .then(cart => {
+                return cart.getProducts({
+                    where: {
+                        pid: prodId
+                    }
+                });
+            })
+            .then(prods => {
+                const prod = prods[0];
+                if (--prod.cartItem.quantity === 0) {
+                    return prod.cartItem.destroy();
                 }
+                return prod.cartItem.save();
+            })
+            .then(() => {
+                req.flash("success", "Successfully delete the product from your cart.");
+                res.redirect("/cart");
+            })
+            .catch(err => {
+                console.log(err);
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
             });
-        })
-        .then(prods => {
-            const prod = prods[0];
-            if(--prod.cartItem.quantity === 0){
-                return prod.cartItem.destroy();
-            }
-            return prod.cartItem.save();
-        })
-        .then(() => {
-            req.flash("success", "Successfully delete the product from your cart.");
-            res.redirect("/cart");
-        })
-        .catch(err => {
-            console.log(err);
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
     }
-    else{
+    else {
         req.user.getCart()
-        .then(cart => {
-            return cart.getProducts({
-                where: {
-                    pid: prodId
-                }
+            .then(cart => {
+                return cart.getProducts({
+                    where: {
+                        pid: prodId
+                    }
+                });
+            })
+            .then(prods => {
+                console.log(prods);
+                const prod = prods[0];
+                return prod.cartItem.destroy();
+            })
+            .then(() => {
+                res.redirect("/cart");
+            })
+            .catch(err => {
+                console.log(err);
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
             });
-        })
-        .then(prods => {
-            console.log(prods);
-            const prod = prods[0];
-            return prod.cartItem.destroy();
-        })
-        .then(() => {
-            res.redirect("/cart");
-        })
-        .catch(err => {
-            console.log(err);
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
-    }    
+    }
 };
 
 exports.getOrders = (req, res, next) => {
@@ -331,17 +331,17 @@ exports.getOrders = (req, res, next) => {
         order: [["createdAt", "DESC"]],
         include: ["orderItems"]
     })
-    .then(orders => {
-        res.render("products/orders", {
-            orders: orders
+        .then(orders => {
+            res.render("products/orders", {
+                orders: orders
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
-    })
-    .catch(err => {
-        console.log(err);
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-    });
 };
 
 exports.postAddCartIntoOrder = (req, res, next) => {
@@ -354,34 +354,34 @@ exports.postAddCartIntoOrder = (req, res, next) => {
         .then(products => {
             console.log(products);
             return req.user.createOrder()
-                    .then(order => {
-                        products.map(prod => {
-                            order.createOrderItem({
-                                quantity: prod.cartItem.quantity,
-                                productName: prod.name,
-                                productType: prod.type,
-                                productPrice: prod.price
-                            })
+                .then(order => {
+                    products.map(prod => {
+                        order.createOrderItem({
+                            quantity: prod.cartItem.quantity,
+                            productName: prod.name,
+                            productType: prod.type,
+                            productPrice: prod.price
+                        })
                             .catch(err => console.log(err));
-                        });
-                    })
-                    // .then(order => {
-                    //     return order.addProducts(products.map(prod => {
-                    //         prod.orderItem = {
-                    //             quantity: prod.cartItem.quantity,
-                    //             productName: prod.name,
-                    //             productType: prod.type,
-                    //             productPrice: prod.price
-                    //         };
-                    //         return prod;
-                    //     }));
-                    // })
-                    .catch(err => {
-                        console.log(err);
-                        const error = new Error(err);
-                        error.httpStatusCode = 500;
-                        return next(error);
                     });
+                })
+                // .then(order => {
+                //     return order.addProducts(products.map(prod => {
+                //         prod.orderItem = {
+                //             quantity: prod.cartItem.quantity,
+                //             productName: prod.name,
+                //             productType: prod.type,
+                //             productPrice: prod.price
+                //         };
+                //         return prod;
+                //     }));
+                // })
+                .catch(err => {
+                    console.log(err);
+                    const error = new Error(err);
+                    error.httpStatusCode = 500;
+                    return next(error);
+                });
         })
         .then(() => {
             return myCart.setProducts(null);
@@ -401,16 +401,16 @@ exports.postAddCartIntoOrder = (req, res, next) => {
 exports.getInovice = (req, res, next) => {
     const orderId = req.params.oid;
     req.user.getOrders({
-            where: {
-                id: orderId
-            },
-            include: ["orderItems"]
-        })
-    // Order.findByPk(orderId, {
-    //     includes: ["orderItems"]
-    // })
+        where: {
+            id: orderId
+        },
+        include: ["orderItems"]
+    })
+        // Order.findByPk(orderId, {
+        //     includes: ["orderItems"]
+        // })
         .then(order => {
-            if(!order){
+            if (!order) {
                 return next(new Error("Order not found."));
             }
             const doc = new PDFDocument();
@@ -422,7 +422,7 @@ exports.getInovice = (req, res, next) => {
 
             let totalPrice = 0;
             const myOrderItems = order[0].dataValues.orderItems;
-            doc.font("Times-Roman", 24).text("MyShop inovice", {align: "center"});
+            doc.font("Times-Roman", 24).text("MyShop inovice", { align: "center" });
             doc.moveDown();
             myOrderItems.forEach(item => {
                 totalPrice = totalPrice + item.dataValues.quantity * item.dataValues.productPrice;
@@ -432,7 +432,7 @@ exports.getInovice = (req, res, next) => {
                 doc.moveDown(0.5);
             });
             doc.moveDown();
-            doc.font("Times-Roman", 20).text("Total Price: $" + totalPrice, {align: "right"});
+            doc.font("Times-Roman", 20).text("Total Price: $" + totalPrice, { align: "right" });
             doc.pipe(res);
             doc.end();
         })

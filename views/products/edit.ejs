@@ -1,25 +1,39 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container">
-    
-    <form action="/products/<%= prod.pid %>?_method=PUT" method="POST" enctype="multipart/form-data"> 
+<div class="container-fluid">
+
+    <form action="/products/<%= prod.pid %>?_method=PUT" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="productName">Name</label>
             <input type="text" class="form-control" name="product[name]" value="<%= prod.name %>">
         </div>
         <div class="form-group">
             <label for="productType">Type</label>
-            <select class="form-control" name="product[type]">
-                <option hidden><%= prod.type %></option>
-                <option>Book</option>
-                <option>Game</option>
-                <option>Animal</option>
-            </select>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button">Button</button>
+                </div>
+                <select class="custom-select" name="product[type]">
+                    <option selected hidden><%= prod.type %></option>
+                    <option value="Book">Book</option>
+                    <option value="Game">Game</option>
+                    <option value="Animal">Animal</option>
+                </select>
+            </div>
         </div>
         <div class="form-group">
             <label for="productImage">Image</label>
-            <input type="file" class="form-control" name="image">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button" id="imgFileAddon">Image</button>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="productImage" aria-describedby="imgFileAddon"
+                        name="image">
+                    <label class="custom-file-label" for="productImage">Choose file</label>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="productPrice">Price</label>

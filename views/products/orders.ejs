@@ -1,27 +1,27 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container">
+<div class="container-fluid orders">
     <% if(orders.length > 0) {%>
-        <% orders.forEach(order => { %>
-                <h3><a href="/orders/<%= order.id %>">Inovice</a> - <%= order.id %></h3>
-                
-                <h4></h4>
-                <% order.orderItems.forEach(item => { %>
-                    <div class="row">
-                        <div class="col">
-                            <p><%= item.productName %></p>
-                        </div>
-                        <div class="col">
-                            <p><%= item.quantity %></p>
-                        </div>
-                    </div>
-                <% })%>
-                <h4><%= order.createdAt %></h4>
-                <hr>
-        <% });%>
+    <% orders.forEach(order => { %>
+    <h3><a href="/orders/<%= order.id %>">INOVICE</a> - <%= order.id %></h3>
+
+    <h4></h4>
+    <% order.orderItems.forEach(item => { %>
+    <div class="row">
+        <div class="col">
+            <h5>Product name: <%= item.productName %></h5>
+        </div>
+        <div class="col">
+            <h5>Quantity: <%= item.quantity %></h5>
+        </div>
+    </div>
+    <% })%>
+    <p class="text-right"><%= order.createdAt %></p>
+    <hr>
+    <% });%>
     <% }else{ %>
-        <h1>No Products in Orders!</h1>
+    <h1>No Products in Orders!</h1>
     <% }%>
 </div>
 

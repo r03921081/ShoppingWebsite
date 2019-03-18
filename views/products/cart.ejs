@@ -1,33 +1,37 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container">
+<div class="container cartItems">
     <% if(prod.length > 0) {%>
-        <% prod.forEach(p => { %>
-            <div class="row">
-                <div class="col">
-                    <h1><%= p.name %></h1>
-                    <h2><%= p.cartItem.quantity %></h2>
-                    <form action="/cartDelete?edit=true" method="POST">
-                        <input type="hidden" value="<%= p.pid %>" name="productId">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button class="btn btn-warning" type="submit">Decrease 1</button>
-                    </form>
-                    <form action="/cartDelete" method="POST">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <input type="hidden" value="<%= p.pid %>" name="productId">
-                        <button class="btn btn-danger" type="submit">Cancel</button>
-                    </form>
-                    <hr>                    
-                </div>
+    <% prod.forEach(p => { %>
+    <div class="row">
+        <div class="col">
+            <h3>Product name: <%= p.name %></h3>
+            <h3>Quantity: <%= p.cartItem.quantity %></h3>
+            <div class="input-group">
+                <form action="/cartDelete?edit=true" method="POST">
+                    <input type="hidden" value="<%= p.pid %>" name="productId">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="btn btn-sm btn-warning" type="submit">Decrease 1</button>
+                </form>
+                <form action="/cartDelete" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" value="<%= p.pid %>" name="productId">
+                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                </form>
             </div>
-        <% });%>
+            <hr>
+        </div>
+    </div>
+    <% });%>
+    <div class="text-right">
         <form action="/orders" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn btn-primary" type="submit">Order Now</button>
+            <button class="btn btn-lg btn-primary" type="submit">Order Now</button>
         </form>
+    </div>
     <% }else{ %>
-        <h1>No Products in Cart!</h1>
+    <h1>No Products in Cart!</h1>
     <% }%>
 </div>
 

@@ -23,7 +23,7 @@ const User = require("./models/user");
 const csrfProtection = csrf();
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 app.use("/images", express.static(__dirname + "/images"));
@@ -31,30 +31,30 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 const fileStorage = multer.diskStorage({
-	destination: function (req, file, cb){
+	destination: function (req, file, cb) {
 		cb(null, "images");
 	},
-	filename: function (req, file, cb){
+	filename: function (req, file, cb) {
 		cb(null, file.originalname + "_" + Date.now().toString());
 	}
 });
 
 const fileFilter = (req, file, cb) => {
-	if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg"){
+	if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
 		cb(null, true);
 	}
-	else{
+	else {
 		cb(null, false);
 	}
 };
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single("image"));
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
 
-app.use(session({ 
+app.use(session({
 	secret: "MySecretKey",
 	resave: true,
-	saveUninitialized:true
-})); 
-app.use(passport.initialize()); 
+	saveUninitialized: true
+}));
+app.use(passport.initialize());
 app.use(passport.session());
 myPassport(passport, User);
 app.use(csrfProtection);
@@ -65,17 +65,17 @@ app.use((req, res, next) => {
 	res.locals.csrfToken = req.csrfToken();
 	res.locals.success = req.flash("success");
 	res.locals.error = req.flash("error");
-	
-	if(req.user !== undefined){
+
+	if (req.user !== undefined) {
 		// console.log(req.user);
 		User.findByPk(req.user.id)
-		.then(u => {
-			req.user = u;
-			next();
-		})
-		.catch(err => console.log(err));
+			.then(u => {
+				req.user = u;
+				next();
+			})
+			.catch(err => console.log(err));
 	}
-	else{
+	else {
 		console.log("Guest");
 		next();
 	}
@@ -88,7 +88,7 @@ app.use(commentsRoutes.routes);
 app.use(errorController.get404);
 
 app.use((error, req, res, next) => {
-    res.status(500).render("500", {
+	res.status(500).render("500", {
 		pageTitle: error
 	});
 });

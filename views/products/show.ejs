@@ -1,43 +1,86 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="thumbnail">
-                <img class="img-responsive" src="/<%= prod.image %>">
-                <div class="caption-full">
-                    <h3><a><%= prod.name %></a></h3>
-                    <h4><a><%= prod.type %></a></h4>
+            <div class="thumbnail-fluid productsInfo">
+                <img class="img-responsive img-fluid productsImg" src="/<%= prod.image %>">
+                <div class="caption-full productsInfoText">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h3>Name:</h3>
+                        </div>
+                        <div class="col-md-9">
+                            <h4><a><%= prod.name %></a></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h3>Type:</h3>
+                        </div>
+                        <div class="col-md-9">
+                            <h4><a><%= prod.type %></a></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h3>Price:</h3>
+                        </div>
+                        <div class="col-md-9">
+                            <h4><a>$ <%= prod.price %></a></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4>Description:</h4>
+                        </div>
+                        <div class="col-md-9">
+                            <h4><a><%= prod.description %></a></h4>
+                        </div>
+                    </div>
                 </div>
-                <a class="btn btn-lg btn-warning" href="/products/<%= prod.pid %>/edit">Edit</a>
-                <form action="/products/<%= prod.pid %>?_method=DELETE" method="POST">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <button class="btn btn-lg btn-danger">Delete</button>
-                </form>
+                <%- include("../includes/addToCart.ejs", {product: prod}) %>
+                <% if(currentUser && prod.userId == currentUser.id){ %>
+                <div class="input-group btnEditDeleteGroup">
+                    <a class="btn btn-sm btn-warning btnEdit" href="/products/<%= prod.pid %>/edit">Edit</a>
+                    <form action="/products/<%= prod.pid %>?_method=DELETE" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="btn btn-sm btn-danger btnDelete">Delete</button>
+                    </form>
+                </div>
+                <% } %>
             </div>
         </div>
     </div>
 
-    <div class="well">
-        <div class="text-right">
-            <a class="btn btn-primary" href="/products/<%= prod.pid %>/comments/new">Add new comment</a>
+    <div class="well-fluid productsInfo">
+        <div class="btnAddComment">
+            <a class="btn btn-lg btn-primary" href="/products/<%= prod.pid %>/comments/new">Add new comment</a>
         </div>
         <% comment.forEach(c => { %>
-            <div class="row">
-                <div class="col-md-10">
-                    <strong><h3><%= c.username %></h3></strong>
-                    <p><%= c.text %></p>                    
-                </div>
-                <div class="col-md-2">
-                    <a class="btn btn-warning" href="/products/<%= prod.pid %>/comments/<%= c.cid %>/edit">Edit</a>
+        <div class="row productsComments">
+            <div class="col-md-10">
+                <strong>
+                    <h3><%= c.userId %></h3>
+                </strong>
+                <p><%= c.text %></p>
+                <p><%= c.createdAt %></p>
+            </div>
+            <div class="col-md-2">
+                <% if(currentUser && c.userId == currentUser.id){ %>
+                <div class="input-group btnEditDeleteGroup">
+                    <a class="btn btn-sm btn-warning btnEdit"
+                        href="/products/<%= prod.pid %>/comments/<%= c.cid %>/edit">Edit</a>
                     <form action="/products/<%= prod.pid %>/comments/<%= c.cid %>?_method=DELETE" method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-sm btn-danger btnDelete">Delete</button>
                     </form>
-                    <p><%= c.createdAt %></p>
                 </div>
-            </div>            
+                <% } %>
+            </div>
+
+        </div>
         <% }) %>
     </div>
 </div>
