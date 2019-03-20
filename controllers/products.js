@@ -19,7 +19,7 @@ exports.getProducts = (req, res, next) => {
         });
 };
 
-exports.getAddProduct = (req, res) => {
+exports.getAddProduct = (req, res, next) => {
     res.render("products/new", {
         product: null,
         validationErrors: []

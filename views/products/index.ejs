@@ -6,33 +6,33 @@
 	<a class="btn btn-lg btn-primary" href="#" role="button">Readmore</a>
 </div> -->
 
-<div class="container-fluid"></div>
-<% if(prod.length > 0){ %>
-<div class="row">
-	<% prod.forEach( product => { %>
-	<div class="col-fluid" style="padding: 0.5rem;">
-		<div class="card-fluid productsCard shallow">
-			<img src="/<%= product.image %>" class="card-img-top img-fluid" alt="<%= product.name %>">
-			<div class="card-body cardBodyInfo">
-				<h5 class="card-title"><%= product.name %></h5>
-				<p><%= product.type %> type</p>
-				<p>$ <%= product.price %></p>
-			</div>
-			<div class="card-body cardBodyButton">
-				<div class="row">
-					<a href="/products/<%= product.pid %>" class="btn btn-info">More info</a>
-					<%- include("../includes/addToCart.ejs", {product: product}) %>
+<div class="container-fluid formShallow formLimited">
+	<% if(prod.length > 0){ %>
+	<div class="row">
+		<% prod.forEach( product => { %>
+		<div class="col-fluid" style="padding: 0.5rem;">
+			<div class="card-fluid productsCard shallow">
+				<img src="/<%= product.image %>" class="card-img-top img-fluid" alt="<%= product.name %>">
+				<div class="card-body cardBodyInfo">
+					<h5 class="card-title"><%= product.name %></h5>
+					<p><%= product.type %> type</p>
+					<p>$ <%= product.price %></p>
+				</div>
+				<div class="card-body cardBodyButton">
+					<div class="row">
+						<a href="/products/<%= product.pid %>" class="btn btn-info">More info</a>
+						<%- include("../includes/addToCart.ejs", {product: product}) %>
+					</div>
 				</div>
 			</div>
 		</div>
+		<% }); %>
 	</div>
-	<% }); %>
-</div>
-<% } else { %>
-<div class="center">
-	<h1>No Products Found!</h1>
-</div>
-<% } %>
+	<% } else { %>
+	<div class="center">
+		<h1>No Products Found!</h1>
+	</div>
+	<% } %>
 </div>
 
 

@@ -94,7 +94,7 @@ app.use((error, req, res, next) => {
 });
 
 sequelize
-	// .sync({force: true})
+	// .sync({ force: true })
 	.sync()
 	.then(() => {
 		app.listen(3000, () => {
