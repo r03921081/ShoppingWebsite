@@ -26,7 +26,7 @@
     4.  Order page.
 ![](https://github.com/r03921081/ShoppingWebsite/blob/master/images/order.PNG)
 
-    5.  Innovice pdf.
+    5.  Inovice pdf.
 ![](https://github.com/r03921081/ShoppingWebsite/blob/master/images/innovice.PNG)
 
     6.  Sign up page.
