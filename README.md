@@ -53,3 +53,8 @@
     * multer  
 3. Add validator to check request's formats. (Validator can prevent SQL injection attacks.)  
     * express-validator  
+
+## 20190318
+### Main functions:  
+1.  Beauty the frontend UI.
+2.  Fix all bugs.
