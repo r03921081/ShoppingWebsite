@@ -4,12 +4,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="thumbnail productsInfo shallow">
+            <div class="thumbnail productsInfo productsAppend shallow">
                 <img class="img-responsive img-fluid productsImg" src="/<%= prod.image %>">
-                <div class="caption-full productsInfoText">
+                <div class="caption-full productsInfoText shallow">
                     <div class="row">
                         <div class="col-md-3">
-                            <h3>Name:</h3>
+                            <h3>Product:</h3>
                         </div>
                         <div class="col-md-9">
                             <h4><a><%= prod.name %></a></h4>
@@ -57,17 +57,19 @@
     </div>
 
     <div class="well-fluid productsInfo productInfoDel">
-        <div class="btnAddComment text-right">
+        <div class="btnAddComment text-right" style="padding-right: 1rem;">
             <a class="btn btn-lg btn-primary" href="/products/<%= prod.pid %>/comments/new">Add new comment</a>
         </div>
         <% comment.forEach(c => { %>
         <div class="row productsComments shallow">
             <div class="col-md-10">
-                <strong>
-                    <h3><%= c.userId %></h3>
-                </strong>
-                <p><%= c.text %></p>
-                <p><%= c.createdAt %></p>
+                <b>
+                    <h4><%= c.user.username %></h4>
+                </b>
+                <h5><%= c.text %></h5>
+                <i>
+                    <p><%= new Date(c.createdAt).toLocaleString() %></p>
+                </i>
             </div>
             <div class="col-md-2">
                 <% if(currentUser && c.userId == currentUser.id){ %>

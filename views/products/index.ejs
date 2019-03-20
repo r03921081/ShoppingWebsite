@@ -8,9 +8,9 @@
 
 <div class="container-fluid formShallow formLimited">
 	<% if(prod.length > 0){ %>
-	<div class="row">
+	<div class="row" style="padding-left: 5rem; padding-right: 3rem;">
 		<% prod.forEach( product => { %>
-		<div class="col-fluid" style="padding: 0.5rem;">
+		<div class="col-fix" style="padding: 1rem;">
 			<div class="card-fluid productsCard shallow">
 				<img src="/<%= product.image %>" class="card-img-top img-fluid" alt="<%= product.name %>">
 				<div class="card-body cardBodyInfo">
@@ -18,7 +18,7 @@
 					<p><%= product.type %> type</p>
 					<p>$ <%= product.price %></p>
 				</div>
-				<div class="card-body cardBodyButton">
+				<div class="card-body cardBodyButton" style="padding-left: 3rem;">
 					<div class="row">
 						<a href="/products/<%= product.pid %>" class="btn btn-info">More info</a>
 						<%- include("../includes/addToCart.ejs", {product: product}) %>

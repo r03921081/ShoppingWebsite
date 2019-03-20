@@ -1,23 +1,23 @@
 <% include ../includes/header %>
 <% include ../includes/navigation %>
 
-<div class="container cartItems formShallow formLimited">
+<div class="container-fluid cartItems formShallow formLimited">
     <% if(prod.length > 0) {%>
     <% prod.forEach(p => { %>
     <div class="row">
         <div class="col">
-            <h3>Product name: <%= p.name %></h3>
-            <h3>Quantity: <%= p.cartItem.quantity %></h3>
+            <h3>Product: &nbsp <%= p.name %></h3>
+            <h3>Quantity: &nbsp<%= p.cartItem.quantity %></h3>
             <div class="input-group">
                 <form action="/cartDelete?edit=true" method="POST">
                     <input type="hidden" value="<%= p.pid %>" name="productId">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <button class="btn btn-sm btn-warning" type="submit">Decrease 1</button>
+                    <button class="btn btn-sm btn-warning" type="submit">—</button>
                 </form>
                 <form action="/cartDelete" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <input type="hidden" value="<%= p.pid %>" name="productId">
-                    <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                    <button class="btn btn-sm btn-danger" type="submit">X</button>
                 </form>
             </div>
             <hr>

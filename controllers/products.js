@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 
 const { validationResult } = require("express-validator/check");
 const fileHandler = require("../util/fileHandler");
@@ -89,7 +90,7 @@ exports.getUniqueProduct = (req, res, next) => {
         .then(prod => {
             myProd = prod;
             console.log(myProd);
-            return prod.getUserComments();
+            return prod.getUserComments({ include: User });
         })
         .then(comments => {
             console.log(comments);
